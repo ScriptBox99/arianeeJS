@@ -212,6 +212,38 @@ describe('UTILS', () => {
     });
   });
 
+  describe('add queryParams', () => {
+    test('should be able to add queryParams', () => {
+      const expectedValue = 'http://www.myexample.com/?myKey=myvalue';
+      const resultURL = UtilsService.addQueryParmas('http://www.myexample.com',
+        [{ key: 'myKey', value: 'myvalue' }]);
+
+      expect(resultURL).toBe(expectedValue);
+    });
+
+    test('should be able to add multiple queryParams', () => {
+      const expectedValue = 'http://www.myexample.com/?myKey=myvalue&myKey1=myvalue&myKey2=myvalue';
+      const resultURL = UtilsService.addQueryParmas('http://www.myexample.com',
+        [
+          { key: 'myKey', value: 'myvalue' },
+          { key: 'myKey1', value: 'myvalue' },
+          { key: 'myKey2', value: 'myvalue' }
+        ]);
+
+      expect(resultURL).toBe(expectedValue);
+    });
+    test('should be able to add same queryParams (override it)', () => {
+      const expectedValue = 'http://www.myexample.com/?myKey=myvalue&myKey2=myvalue';
+      const resultURL = UtilsService.addQueryParmas('http://www.myexample.com?myKey=oldvalue',
+        [
+          { key: 'myKey', value: 'myvalue' },
+          { key: 'myKey2', value: 'myvalue' }
+        ]);
+
+      expect(resultURL).toBe(expectedValue);
+    });
+  });
+
   describe('timestampIsMoreRecentThan', () => {
     const utils = new UtilsService(undefined, undefined, undefined);
     test('it should return true if timestamp is recent', () => {

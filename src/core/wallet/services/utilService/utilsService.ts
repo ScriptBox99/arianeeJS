@@ -38,6 +38,26 @@ export class UtilsService {
     return this.signProof(data, privateKeyPreviousOwner);
   }
 
+  /**
+   * Append query params to a url. it keeps already there queryParams and overide if key already present
+   * @param url: url to append
+   * @param queryParams: array of key, value object
+   */
+  public static addQueryParmas = (url, queryParams: { key: string, value: any }[]) => {
+    const urlInstance = new URL(url);
+
+    queryParams.forEach(queryParam => {
+      const { key, value } = queryParam;
+      if (urlInstance.searchParams.has(key)) {
+        urlInstance.searchParams.set(key, value);
+      } else {
+        urlInstance.searchParams.append(key, value);
+      }
+    });
+
+    return urlInstance.href;
+  };
+
   public signProofForRpc (certificateId: number, privateKey: string) {
     const message = {
       certificateId: certificateId,

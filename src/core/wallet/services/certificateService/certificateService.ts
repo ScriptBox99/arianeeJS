@@ -415,6 +415,25 @@ export class CertificateService {
       .send();
   }
 
+  /**
+   * Create an actionProofLink. It appends encode RFC 3986 query param proof link to provided url
+   * @param url
+   * @param certificateId
+   * @param passphrase
+   * @return url
+   */
+  public createActionProofLink=async (url:string, certificateId: number, passphrase?: string) => {
+    if (!passphrase) {
+      passphrase = this.utils.createPassphrase();
+    }
+
+    const { link } = await this.createCertificateProofLink(certificateId, passphrase);
+
+    return UtilsService.addQueryParmas(url, [{
+      key: 'proofLink', value: link
+    }]);
+  }
+
   public createCertificateProofLink = async (
     certificateId: number,
     passphrase?: string
