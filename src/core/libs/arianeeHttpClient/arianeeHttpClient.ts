@@ -53,10 +53,14 @@ export class ArianeeHttpClient {
         id: string,
         result?: resultType
     }> => {
+      console.log('endpoint',endpoint);
       const config = this.RPCConfigurationFactory(endpoint, method, params);
+      console.log('config',config);
 
       const RPCRes = await this.fetch(endpoint, config);
 
+      console.log('RPCRes',RPCRes);
+      
       if (RPCRes.error) {
         throw new Error();
       }

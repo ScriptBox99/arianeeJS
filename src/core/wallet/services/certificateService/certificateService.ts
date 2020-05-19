@@ -161,6 +161,8 @@ export class CertificateService {
 
       return result;
     } catch (e) {
+      return Promise.reject('plop');
+      /*
       const diagnosis = await this.diagnosisService.diagnosis([
         this.diagnosisService.isStoreApprove(),
         this.diagnosisService.isPOACredit(),
@@ -168,6 +170,7 @@ export class CertificateService {
         this.diagnosisService.isCertificateIdExist(preparedData.certificateId)
       ], e);
       return Promise.reject(diagnosis);
+      */
     }
   }
 
