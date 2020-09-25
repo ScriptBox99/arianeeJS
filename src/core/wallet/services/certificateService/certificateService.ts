@@ -199,14 +199,14 @@ export class CertificateService {
       );
   }
 
-  public createAndStoreCertificate=async (data:hydrateTokenParameters, urlOfRPCServer:string): Promise<{
+  public createAndStoreCertificate=async (data:hydrateTokenParameters, arianeePrivacyGatewayURL?:string): Promise<{
   [key:string]:any;
   passphrase:string;
   certificateId: ArianeeTokenId;
   deepLink:string
 }> => {
     const result = await this.customHydrateToken(data);
-    await this.storeContentInRPCServer(result.certificateId, data.content, urlOfRPCServer);
+    await this.storeContentInRPCServer(result.certificateId, data.content, arianeePrivacyGatewayURL);
     return result;
   }
 
@@ -253,10 +253,13 @@ export class CertificateService {
     return this.batchService.executeBatch();
   }
 
-  public storeContentInRPCServer =async (certificateId:ArianeeTokenId, content, url?:string) => {
-    const urlOfServer = url || `${this.walletService.bdhVaultURL}/rpc`;
+  public storeContentInRPCServer =async (certificateId:ArianeeTokenId, content, arianeePrivacyGatewayURL?:string) => {
+    arianeePrivacyGatewayURL = arianeePrivacyGatewayURL || this.configurationService.arianeeConfiguration.defaultArianeePrivacyGateway;
+    if (!arianeePrivacyGatewayURL) {
+      throw new Error('You need to specify an Arianee Privacy Gateway URL');
+    }
 
-    return this.httpClient.RPCCall(urlOfServer, 'certificate.create', { certificateId: certificateId, json: content });
+    return this.httpClient.RPCCall(arianeePrivacyGatewayURL, 'certificate.create', { certificateId: certificateId, json: content });
   }
 
   private customRequestTokenFactory = (certificateId, passphrase) => {

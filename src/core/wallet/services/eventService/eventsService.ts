@@ -267,8 +267,13 @@ export class EventService {
     certificateId:ArianeeTokenId,
     arianeeEventId:number,
     content,
-    url:string) => {
-    return this.httpClient.RPCCall(url, 'event.create', {
+    arianeePrivacyGatewayURL?:string) => {
+    arianeePrivacyGatewayURL = arianeePrivacyGatewayURL || this.configurationService.arianeeConfiguration.defaultArianeePrivacyGateway;
+    if (!arianeePrivacyGatewayURL) {
+      throw new Error('You need to specify an Arianee Privacy Gateway URL');
+    }
+
+    return this.httpClient.RPCCall(arianeePrivacyGatewayURL, 'event.create', {
       certificateId: certificateId,
       eventId: arianeeEventId,
       json: content
@@ -280,9 +285,9 @@ export class EventService {
     certificateId: number,
     arianeeEventId?:number;
     content?: { $schema: string;[key: string]: any };
-  }, url:string) => {
+  }, arianeePrivacyGatewayURL?:string) => {
     const result = await this.createArianeeEvent(data);
-    await this.storeArianeeEventContentInRPCServer(data.certificateId, result.arianeeEventId, data.content, url);
+    await this.storeArianeeEventContentInRPCServer(data.certificateId, result.arianeeEventId, data.content, arianeePrivacyGatewayURL);
 
     return result;
   }

@@ -222,8 +222,13 @@ export class MessageService {
   public storeMessageContentInRPCServer =async (
     messageId:number,
     content,
-    url:string) => {
-    return this.httpClient.RPCCall(url, 'message.create', {
+    arianeePrivacyGatewayURL?:string) => {
+    arianeePrivacyGatewayURL = arianeePrivacyGatewayURL || this.configurationService.arianeeConfiguration.defaultArianeePrivacyGateway;
+    if (!arianeePrivacyGatewayURL) {
+      throw new Error('You need to specify an Arianee Privacy Gateway URL');
+    }
+
+    return this.httpClient.RPCCall(arianeePrivacyGatewayURL, 'message.create', {
       messageId,
       json: content
     });
@@ -234,9 +239,9 @@ export class MessageService {
     certificateId: number,
     content?: { $schema: string;[key: string]: any };
       messageId?: number;
-  }, url:string) => {
+  }, arianeePrivacyGatewayURL?:string) => {
     const result = await this.createMessage(data);
-    await this.storeMessageContentInRPCServer(result.messageId, data.content, url);
+    await this.storeMessageContentInRPCServer(result.messageId, data.content, arianeePrivacyGatewayURL);
 
     return result;
   }
