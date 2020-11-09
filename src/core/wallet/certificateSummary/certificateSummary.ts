@@ -132,7 +132,7 @@ export type ConsolidatedIssuerRequest = ConsolidatedIssuerRequestInterface | boo
 
 export interface ConsolidatedCertificateRequest {
   isRequestable?: boolean;
-  content?: boolean;
+  content?: ConsolidatedIssuerRequest;
   issuer?: ConsolidatedIssuerRequest;
   owner?: boolean;
   events?: boolean;
