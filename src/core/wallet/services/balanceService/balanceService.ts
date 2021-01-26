@@ -29,12 +29,7 @@ export class BalanceService {
       .balanceOf(address)
       .call();
 
-    const amount = new this.web3Service.web3.utils.BN(balance);
-
-    const dividedBy = new this.web3Service.web3.utils.BN(10)
-      .pow(new this.web3Service.web3.utils.BN(18));
-
-    return amount.div(dividedBy).toString();
+    return this.web3Service.web3.utils.fromWei(balance, 'ether');
   };
 
   /**
