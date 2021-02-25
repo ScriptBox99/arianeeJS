@@ -1,9 +1,14 @@
+import { WalletService } from 'core/wallet/services/walletService/walletService';
 import { Arianee, NETWORK } from '../src';
 
 (async function () {
   const arianee = await new Arianee().init(NETWORK.testnet);
 
- 
+  let wallet = arianee.fromMnemonic("roof stick equip flock grit need pony lazy cable sleep mosquito year")
+
+  wallet.methods.requestCertificateOwnership(10106286,"4k6oi8vam838");
+
+  
 
   /*
   const parentContent0 = {
