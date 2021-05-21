@@ -17,6 +17,7 @@ import { ContractService } from './services/contractService/contractsService';
 import { DiagnosisService } from './services/diagnosisService/diagnosisService';
 import { EventService } from './services/eventService/eventsService';
 import { GlobalConfigurationService } from './services/globalConfigurationService/globalConfigurationService';
+import { GroupMessageService } from './services/groupMessageService/groupMessageService';
 import { IdentityService } from './services/identityService/identityService';
 import { JWTService } from './services/ArianeeAccessToken/JWTService';
 import { MessageService } from './services/messageService/messageService';
@@ -62,7 +63,8 @@ export class ArianeeWallet {
         WalletService,
         Web3Service,
         JWTService,
-        CertificateUtilsService
+        CertificateUtilsService,
+        GroupMessageService
       );
 
       if (configuration.web3) {

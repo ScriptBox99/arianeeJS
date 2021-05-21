@@ -12,6 +12,7 @@ import { ConfigurationService } from '../configurationService/configurationServi
 import { ContractService } from '../contractService/contractsService';
 import { DiagnosisService } from '../diagnosisService/diagnosisService';
 import { EventService } from '../eventService/eventsService';
+import { GroupMessageService } from '../groupMessageService/groupMessageService';
 import { IdentityService } from '../identityService/identityService';
 import { ArianeeAccessTokenService } from '../ArianeeAccessToken/ArianeeAccessTokenService';
 import { MessageService } from '../messageService/messageService';
@@ -35,7 +36,8 @@ export class WalletCustomMethodService {
                private balanceService:BalanceService,
                private diagnosisService:DiagnosisService,
                private arianeeAccessTokenService:ArianeeAccessTokenService,
-               private certificateProofService:CertificateProofService
+               private certificateProofService:CertificateProofService,
+               private groupMessageService:GroupMessageService
   ) {
 
   }
@@ -278,7 +280,8 @@ export class WalletCustomMethodService {
       isAuthURL: this.certificateProofService.isAuthURL,
       updateAndStoreCertificate: this.certificateService.updateAndStoreCertificateContent,
       storeUpdateContentInRPCServer: this.certificateService.storeUpdateContentInRPCServer,
-      updateCertificate: this.certificateService.updateCertificate
+      updateCertificate: this.certificateService.updateCertificate,
+      getGroupMessage: this.groupMessageService.getGroupMessage
     };
   }
 

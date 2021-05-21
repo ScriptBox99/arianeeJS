@@ -4,5 +4,6 @@ export enum StoreNamespace {
   certificateContent = 'certificate/content',
   certificateIssuer = 'certificate/issuer',
   certificateIds='certificates/ids',
-  messages='messages'
+  messages = 'messages',
+  groupMessage = 'groupMessage'
 }
